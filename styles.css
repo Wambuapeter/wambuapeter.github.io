@@ -483,7 +483,7 @@ input[type='text']::placeholder, input[type='email']::placeholder,::placeholder 
 .hero-section .image .avatar {
     position: relative;
     left: 0;
-    top: 103px;
+    top: 10px;
     border-bottom-left-radius: 16px;
 }
 @keyframes enter-hero-cover {
@@ -1256,6 +1256,10 @@ input[type='text']::placeholder, input[type='email']::placeholder,::placeholder 
     }
     .hero-section .content .full-name {
         font-size: 40px;
+        margin: 0 0 16px;
+    }
+    .hero-section .content .half-name {
+        font-size: 30px;
         margin: 0 0 16px;
     }
     .hero-section .image {
