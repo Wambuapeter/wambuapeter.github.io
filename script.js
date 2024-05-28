@@ -82,42 +82,53 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // Portfolio slider
     var numberOfSlides = document.querySelectorAll('.swiper-slide').length;
     new Swiper('.swiper', {
-        loop: false,
-        allowSlidePrev: numberOfSlides !== 1,
-        allowSlideNext: numberOfSlides !== 1,
-        breakpoints: {
-            0: {
-                slidesPerView: 1,
-                spaceBetween: 16,
-            },
-            769: {
-                slidesPerView: 2,
-                spaceBetween: 32,
-            },
-            1151: {
-                slidesPerView: 3,
-                spaceBetween: 56,
-            },
+    loop: false,
+    allowSlidePrev: numberOfSlides !== 1,
+    allowSlideNext: numberOfSlides !== 1,
+    breakpoints: {
+        0: {
+            slidesPerView: 1,
+            spaceBetween: 16,
         },
-        navigation: {
-            nextEl: '.slider-navigation .next',
-            prevEl: '.slider-navigation .prev',
+        769: {
+            slidesPerView: 2,
+            spaceBetween: 32,
         },
+        1151: {
+            slidesPerView: 3,
+            spaceBetween: 56,
+        },
+    },
+    navigation: {
+        nextEl: '.slider-navigation .next',
+        prevEl: '.slider-navigation .prev',
+    },
     });
+
     // Experiences
-    document.querySelector(".experience-section .companies-list").addEventListener('click', function (e) {
-        e.preventDefault();
-        if (e.target.tagName === 'LI') {
-           window.innerWidth > 992 ? document.querySelector(".experience-section .selector").style.top = e.target.offsetTop + 'px' : null;
-            document.querySelector(".experience-section .companies-list li.active").classList.remove('active')
-            e.target.classList.add('active');
-            var targetTab = e.target.getAttribute('data-tab');
-            if (targetTab) {
-                document.querySelector(".experience-section .content.active").classList.remove('active')
-                document.getElementById(targetTab).classList.add('active')
-            }
+    document.querySelector(".experience-section .companies-list ul").addEventListener('click', function (e) {
+    if (e.target.tagName === 'LI') {
+        // Move the selector to the active tab
+        if (window.innerWidth > 992) {
+            document.querySelector(".experience-section .selector").style.top = e.target.offsetTop + 'px';
         }
-    });
+
+        // Remove active class from previous list item
+        document.querySelector(".experience-section .companies-list li.active").classList.remove('active');
+        // Add active class to the clicked list item
+        e.target.classList.add('active');
+
+        // Get the data-tab attribute of the clicked list item
+        var targetTab = e.target.getAttribute('data-tab');
+        if (targetTab) {
+            // Remove active class from previous content
+            document.querySelector(".experience-section .content.active").classList.remove('active');
+            // Add active class to the target content
+            document.getElementById(targetTab).classList.add('active');
+        }
+    }
+});
+
     // Skill
     var bars = document.querySelectorAll(".progress-bar .main-bar .fill");
     window.addEventListener('scroll', function () {
