@@ -413,8 +413,10 @@ input[type='text']::placeholder, input[type='email']::placeholder,::placeholder 
     align-items: center;
     justify-content: space-between;
     margin-top: 181px;
+    gap: 40px; /* Adds space between content and image */
 }
 .hero-section .content {
+    flex: 1;
     padding-top: 64px;
 }
 .hero-section .content .full-name {
@@ -444,10 +446,13 @@ input[type='text']::placeholder, input[type='email']::placeholder,::placeholder 
 .hero-section .image {
     position: relative;
     width: 100%;
-    max-width: 341px;
-    height: 398px;
+    max-width: 350px;
+    height: auto;
+    border-radius: 16px;
+    overflow: hidden;
 }
-.hero-section .image .cover {
+
+/*.hero-section .image .cover {
     background: var(--purple-light-1);
     position: absolute;
     width: 100%;
@@ -476,21 +481,39 @@ input[type='text']::placeholder, input[type='email']::placeholder,::placeholder 
     transform: rotate(350deg);
     animation: enter-hero-cover .8s cubic-bezier(0.42, 0, 0.12, 1.28);
     transition: all .2s;
-}
+}*/
 .hero-section .image:hover .cover:after {
     transform: rotate(353deg);
 }
 .hero-section .image .avatar {
-    position: relative;
-    left: 0;
-    top: 10px;
-    border-bottom-left-radius: 16px;
-    max-width: 350px;
-    max-height: 600px;
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
+
 @keyframes enter-hero-cover {
     from { transform: rotate(360deg)}
     to { transform: rotate(350deg)}
+}
+
+.about {
+    line-height: 1.6;
+    max-width: 538px;
+}
+
+.personal-interests {
+    display: block;
+    margin-top: 1em;
+    font-style: italic;
+    color: var(--cinder-light);
+    border-left: 3px solid var(--purple);
+    padding-left: 1em;
+}
+
+[data-theme="dark"] .personal-interests {
+    color: var(--light-4);
 }
 
 /* SERVICES SECTION */
@@ -650,12 +673,12 @@ input[type='text']::placeholder, input[type='email']::placeholder,::placeholder 
 
 .experience-section {
     padding: 104px 0 120px;
-    background: var(--light);
+    /* Remove the background property to match other sections */
 }
 
-[data-theme="dark"] .experience-section {
-    background: var(--dark-background); /* Adjust the background color for dark mode */
-}
+/*[data-theme="dark"] .experience-section {
+    background: var(--dark-background); Adjust the background color for dark mode
+}*/
 
 .experience-section .container {
     width: 100%;
@@ -684,9 +707,9 @@ input[type='text']::placeholder, input[type='email']::placeholder,::placeholder 
 }
 
 .experience-section .experience-item {
-    width: 31%; /* Adjust the width to fit three items in a row */
+    width: 31%;
     background: var(--white);
-    padding: 20px;
+    padding: 40px;
     margin-bottom: 20px;
     border-radius: 8px;
     box-shadow: 0 1px 20px rgba(0, 0, 0, .02);
@@ -694,9 +717,9 @@ input[type='text']::placeholder, input[type='email']::placeholder,::placeholder 
 }
 
 [data-theme="dark"] .experience-section .experience-item {
-    background: var(--dark-card-background); /* Adjust the card background for dark mode */
-    color: var(--dark-text); /* Adjust the text color for dark mode */
-    box-shadow: 0 1px 20px rgba(255, 255, 255, .05); /* Adjust the shadow for dark mode */
+    background: var(--licorice);
+    color: var(--cinder-light);
+    box-shadow: 0 1px 20px rgba(255, 255, 255, .05);
 }
 
 .experience-section .experience-item:hover {

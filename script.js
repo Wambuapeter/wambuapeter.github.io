@@ -180,45 +180,41 @@ document.addEventListener("DOMContentLoaded", function (event) {
     document.contactForm.addEventListener('submit', function (e) {
         e.preventDefault();
         if (validateForm()) {
-            var formElements = document.contactForm.elements;
-            var formData = {};
-            for (var i = 0; i < formElements.length; i++) {
-                if (formElements[i].name && formElements[i].value) {
-                    formData[formElements[i].name] = formElements[i].value
-                }
-            }
-            var raw = JSON.stringify(formData);
-            var requestOptions = {
+            const form = e.target;
+            const submitBtn = form.querySelector('.submit-btn');
+            
+            // Show loading state
+            submitBtn.classList.add('show-loading');
+            
+            // Use Formspree endpoint - replace 'your-form-id' with your actual Formspree ID
+            fetch("https://formspree.io/f/mjkyngvb", {
                 method: 'POST',
-                body: raw,
-                redirect: 'follow'
-            };
-            document.getElementsByClassName("submit-btn")[0].classList.add('show-loading');
-            fetch("https://contact-form.devchapter-work.workers.dev", requestOptions)
-                .then(response => response.text())
-                .then(result => {
-                    document.getElementsByClassName("submit-btn")[0].classList.remove('show-loading')
-                    document.getElementsByClassName('success-submit-message')[0].classList.add('active')
-                    document.contactForm.reset();
-                    setTimeout(function () {
-                        document.getElementsByClassName('success-submit-message')[0].classList.remove('active')
-                    }, 4000)
-                })
-                .catch(error => {
-                    document.getElementsByClassName("submit-btn")[0].classList.remove('show-loading')
-                    document.getElementsByClassName('fail-submit-message')[0].classList.add('active');
-                    setTimeout(function () {
-                        document.getElementsByClassName('fail-submit-message')[0].classList.remove('active')
-                    }, 4000)
-                });
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.querySelector('.success-submit-message').classList.add('active');
+                    form.reset();
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            })
+            .catch(error => {
+                document.querySelector('.fail-submit-message').classList.add('active');
+            })
+            .finally(() => {
+                submitBtn.classList.remove('show-loading');
+                // Hide messages after 4 seconds
+                setTimeout(() => {
+                    document.querySelector('.success-submit-message').classList.remove('active');
+                    document.querySelector('.fail-submit-message').classList.remove('active');
+                }, 4000);
+            });
         }
-    })
-    document.contactForm.addEventListener('change', function (e) {
-        e.preventDefault();
-        document.querySelectorAll('.validation-error').forEach(function (el) {
-            el.classList.remove('active')
-        })
-    })
+    });
     // Copyright
     var currentYear = new Date().getFullYear();
     var copyrightText = document.querySelector(".footer .copyright .year").innerHTML
